@@ -285,15 +285,15 @@ ls -alh ${WORKDIR}/rockchip-tools.git
 mkdir -p ${WORKDIR}/release
 mkdir -p ${WORKDIR}/rockdev_img_tmp
 cp -a ${WORKDIR}/rockchip-tools.git/RKDevTool-v3.19-D3588 \
-  ${WORKDIR}/rockdev_img_tmp/RKDevTool
-mkdir -p ${WORKDIR}/rockdev_img_tmp/RKDevTool/Image/
+  ${WORKDIR}/rockdev_img_tmp/RKDevTool-v3.19-D3588
+mkdir -p ${WORKDIR}/rockdev_img_tmp/RKDevTool-v3.19-D3588/Image/
 
-cp -a ${WORKDIR}/rockdev/uboot.img ${WORKDIR}/rockdev_img_tmp/RKDevTool/Image/
-cp -a ${WORKDIR}/rockdev/boot.img ${WORKDIR}/rockdev_img_tmp/RKDevTool/Image/
-cp -a ${WORKDIR}/rockdev/rootfs.img ${WORKDIR}/rockdev_img_tmp/RKDevTool/Image/
+cp -a ${WORKDIR}/rockdev/uboot.img ${WORKDIR}/rockdev_img_tmp/RKDevTool-v3.19-D3588/Image/
+cp -a ${WORKDIR}/rockdev/boot.img ${WORKDIR}/rockdev_img_tmp/RKDevTool-v3.19-D3588/Image/
+cp -a ${WORKDIR}/rockdev/rootfs.img ${WORKDIR}/rockdev_img_tmp/RKDevTool-v3.19-D3588/Image/
 
-cd ${WORKDIR}/rockdev_img_tmp/
-rar a ${WORKDIR}/release/${BUILD_TAG} RKDevTool
+cd ${WORKDIR}/rockdev_img_tmp/RKDevTool-v3.19-D3588
+rar a ${WORKDIR}/release/${BUILD_TAG} ./*
 cd ${WORKDIR}/release/
 sha256sum ${BUILD_TAG}
 

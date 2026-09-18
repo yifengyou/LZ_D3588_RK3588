@@ -3,6 +3,12 @@ name: ophub kernel 6.18.y
 on:
   repository_dispatch:
   workflow_dispatch:
+  push:
+    branches:
+      - master
+    paths:
+      - '.github/workflows/ophub_6.18.y.yml'
+      - 'kdevbuild/ophub_6.18.y_image.sh'
 
 env:
   TZ: Asia/Shanghai
