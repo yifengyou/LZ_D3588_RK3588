@@ -3,115 +3,12 @@ name: ophub kernel 6.18.y
 on:
   repository_dispatch:
   workflow_dispatch:
-    inputs:
-      build_type:
-        description: '构建类型'
-        required: false
-        default: 'kernel'
-        type: choice
-        options:
-          - image
-          - kernel
 
 env:
   TZ: Asia/Shanghai
 
 jobs:
-  build-kernel:
-    if: ${{ github.event.inputs.build_type == 'kernel' }}
-    runs-on: ubuntu-22.04
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Show environment
-        id: basic_info
-        run: |
-          nproc
-          uname -a
-          cat /etc/*release
-          free -h
-          mount
-          df -h
-          cat /proc/cpuinfo
-          cat /proc/meminfo
-
-      - name: Create simulated physical disk
-        run: |
-          mnt_size=$(expr $(df -h /mnt | tail -1 | awk '{print $4}' | sed 's/[[:alpha:]]//g' | sed 's/\..*//') - 1)
-          root_size=$(expr $(df -h / | tail -1 | awk '{print $4}' | sed 's/[[:alpha:]]//g' | sed 's/\..*//') - 4)
-          sudo truncate -s "${mnt_size}"G /mnt/mnt.img
-          sudo truncate -s "${root_size}"G /root.img
-          sudo losetup /dev/loop6 /mnt/mnt.img
-          sudo losetup /dev/loop7 /root.img
-          sudo pvcreate /dev/loop6
-          sudo pvcreate /dev/loop7
-          sudo vgcreate github /dev/loop6 /dev/loop7
-          sudo lvcreate -n runner -l 100%FREE github
-          sudo mkfs.xfs /dev/github/runner
-          sudo mkdir -p /builder
-          sudo mount /dev/github/runner /builder
-          sudo chown -R runner.runner /builder
-          df -Th
-
-      - name: Run Kernel Build in Ubuntu 22.04 container
-        working-directory: /builder
-        run: |
-          pwd
-          sudo /bin/cp -a ${{ github.workspace }}/* .
-          ls -alh
-          sudo docker run --rm \
-            --privileged \
-            --cap-add SYS_ADMIN \
-            -v /dev:/dev \
-            -v /builder:/workspace \
-            -w /workspace \
-            ubuntu:22.04 \
-            bash -c "
-              chmod +x /workspace/kdevbuild/ophub_6.18.y_kernel.sh ;
-              /workspace/kdevbuild/ophub_6.18.y_kernel.sh
-            "
-
-      - name: List build output
-        run: |
-          ls -alh  /builder/release/*
-          md5sum /builder/release/*
-
-      - name: Upload Kernel to Release
-        uses: ncipollo/release-action@main
-        with:
-          tag: ophub_6.18.y_kernel
-          artifacts: /builder/release/*
-          allowUpdates: true
-          removeArtifacts: false
-          replacesArtifacts: true
-          token: ${{ secrets.GITHUB_TOKEN }}
-          body: |
-            ## 📦 发布内容
-
-            | 文件 / 目录 | 说明 |
-            | :--- | :--- |
-            | **Image** | Linux 内核镜像 |
-            | **rk3588-lz-d3588.dtb** | 设备树文件（Device Tree Blob） |
-            | **kos.tar.gz** | 内核模块压缩包 |
-            | **kernel-debuginfo** | 内核调试符号包 |
-            | **kernel-devel** | 内核开发头文件及构建依赖 |
-            | **uboot.img** | U-Boot 引导加载程序镜像 |
-
-            ## ⚠️ 重要提示
-
-            > **此发布为中间构建产物，并非完整可启动固件！**
-            > 本仓库仅面向具备嵌入式 Linux 开发经验的专业人员，**非专业开发者请勿下载或使用**。
-
-            ## 🛡️ 免责声明
-
-            -   **按原样提供**：所有文件均不作任何明示或暗示的保证，使用风险由用户自行承担。
-            -   **无官方关联**：本项目与主板厂商及瑞芯微（Rockchip）无任何隶属、授权或商业合作关系。
-            -   **安全建议**：如用于生产环境，请务必及时更新安全补丁、修改默认密码并正确配置防火墙策略。
-
   build-image:
-    if: ${{ github.event.inputs.build_type == 'image' }}
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false

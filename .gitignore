@@ -6,3 +6,11 @@
 *.img
 *.git
 /rockdev
+/LZ_D3588_RK3588-uboot.git
+/LZ_D3588-kernel-5.10.198.git
+/LZ_D3588-kernel-5.10.226.git
+/rockchip-linux_kernel_develop-6.1.git
+/rockchip-linux_kernel_develop-6.6.git
+
+
+

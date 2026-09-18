@@ -78,7 +78,7 @@ cd ${WORKDIR}
 mkdir -p ophub_6.18.y
 cd ophub_6.18.y
 
-wget -c https://github.com/yifengyou/LZ_D3588_RK3588/releases/download/ophub_6.18.y_kernel/uboot.img
+wget -c https://github.com/yifengyou/LZ_D3588_RK3588-uboot/releases/download/lz-d3588-uboot/uboot.img
 ls -alh uboot.img
 mv uboot.img ${WORKDIR}/rockdev/uboot.img
 ls -alh ${WORKDIR}/rockdev/uboot.img
@@ -92,35 +92,35 @@ cd ${WORKDIR}
 mkdir -p ophub_6.18.y
 cd ophub_6.18.y
 
-wget -c https://github.com/yifengyou/LZ_D3588_RK3588/releases/download/ophub_6.18.y_kernel/Image-6.18.y-kdev
-ls -alh Image-6.18.y-kdev
-md5sum Image-6.18.y-kdev
+wget -c https://github.com/yifengyou/LZ_D3588-kernel-ophub_linux-6.18.y/releases/download/lz-d3588-kernel/Image
+ls -alh Image
+md5sum Image
 
-wget -c https://github.com/yifengyou/LZ_D3588_RK3588/releases/download/ophub_6.18.y_kernel/config-6.18.y-kdev
-ls -alh config-6.18.y-kdev
-md5sum config-6.18.y-kdev
+wget -c https://github.com/yifengyou/LZ_D3588-kernel-ophub_linux-6.18.y/releases/download/lz-d3588-kernel/config
+ls -alh config
+md5sum config
 
-wget -c https://github.com/yifengyou/LZ_D3588_RK3588/releases/download/ophub_6.18.y_kernel/System.map-6.18.y-kdev
-ls -alh System.map-6.18.y-kdev
-md5sum System.map-6.18.y-kdev
+wget -c https://github.com/yifengyou/LZ_D3588-kernel-ophub_linux-6.18.y/releases/download/lz-d3588-kernel/System.map
+ls -alh System.map
+md5sum System.map
 
-wget -c https://github.com/yifengyou/LZ_D3588_RK3588/releases/download/ophub_6.18.y_kernel/rk3588-lz-d3588.dtb
+wget -c https://github.com/yifengyou/LZ_D3588-kernel-ophub_linux-6.18.y/releases/download/lz-d3588-kernel/rk3588-lz-d3588.dtb
 ls -alh rk3588-lz-d3588.dtb
 md5sum rk3588-lz-d3588.dtb
 
-wget -c https://github.com/yifengyou/LZ_D3588_RK3588/releases/download/ophub_6.18.y_kernel/kos-6.18.y.tar.gz
+wget -c https://github.com/yifengyou/LZ_D3588-kernel-ophub_linux-6.18.y/releases/download/lz-d3588-kernel/kos-6.18.y.tar.gz
 ls -alh kos-6.18.y.tar.gz
 md5sum kos-6.18.y.tar.gz
 tar -xf kos-6.18.y.tar.gz
 du -sh kos
 
-wget -c https://github.com/yifengyou/LZ_D3588_RK3588/releases/download/ophub_6.18.y_kernel/kernel-devel-6.18.y.tar.gz
+wget -c https://github.com/yifengyou/LZ_D3588-kernel-ophub_linux-6.18.y/releases/download/lz-d3588-kernel/kernel-devel-6.18.y.tar.gz
 ls -alh kernel-devel-6.18.y.tar.gz
 md5sum kernel-devel-6.18.y.tar.gz
 tar -xf kernel-devel-6.18.y.tar.gz
 du -sh kernel-devel
 
-wget -c https://github.com/yifengyou/LZ_D3588_RK3588/releases/download/ophub_6.18.y_kernel/kernel-headers-6.18.y.tar.gz
+wget -c https://github.com/yifengyou/LZ_D3588-kernel-ophub_linux-6.18.y/releases/download/lz-d3588-kernel/kernel-headers-6.18.y.tar.gz
 ls -alh kernel-headers-6.18.y.tar.gz
 md5sum kernel-headers-6.18.y.tar.gz
 tar -xf kernel-headers-6.18.y.tar.gz
@@ -204,9 +204,9 @@ mount boot.img /mnt
 
 mkdir -p /mnt/dtb
 cp -a rk3588-lz-d3588.dtb /mnt/dtb/
-cp -f Image-6.18.y-kdev /mnt/vmlinuz-6.18.y-kdev
-cp -f config-6.18.y-kdev /mnt/config-6.18.y-kdev
-cp -f System.map-6.18.y-kdev /mnt/System.map-6.18.y-kdev
+cp -f Image /mnt/vmlinuz-6.18.y-kdev
+cp -f config /mnt/config-6.18.y-kdev
+cp -f System.map /mnt/System.map-6.18.y-kdev
 touch /mnt/initrd.img-6.18.y-kdev
 
 cat >/mnt/extlinux.conf <<EOF
@@ -284,7 +284,7 @@ ls -alh ${WORKDIR}/rockchip-tools.git
 
 mkdir -p ${WORKDIR}/release
 mkdir -p ${WORKDIR}/rockdev_img_tmp
-cp -a ${WORKDIR}/rockchip-tools.git/RKDevTool-v3.37-LZ-D3588 \
+cp -a ${WORKDIR}/rockchip-tools.git/RKDevTool-v3.19-D3588 \
   ${WORKDIR}/rockdev_img_tmp/RKDevTool
 mkdir -p ${WORKDIR}/rockdev_img_tmp/RKDevTool/Image/
 
