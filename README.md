@@ -40,6 +40,21 @@ Bug report, questions and discussion are welcome, you can post an issue or pull 
 * 亮钻官网: <http://www.liontron.cn/showinfo-136-230-0.html>
 * 官方烧录包（Android12,Ubuntu22.04）: <https://archive.org/details/rk3588dt-firmware-android-ubuntu>
 
+
+## TTL调试口 和 Maskrom短接点
+
+1. 明确CPU无锁，可随意刷机
+2. 带maskrom段阶段，不怕刷成砖
+3. 带TTL，有调试信息，方便debug
+
+![](./images/51182338858800.png)
+
+![](./images/51323044675100.png)
+
+![](./images/50935891984500.png)
+
+
+
 ## 免责申明
 
 - 本仓库所提供的内容均基于公开、合法渠道整理，仅供用户参考与学习之用。
